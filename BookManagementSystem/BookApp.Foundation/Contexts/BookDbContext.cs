@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookApp.Foundation.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookApp.Foundation.Contexts
 {
@@ -24,5 +25,17 @@ namespace BookApp.Foundation.Contexts
 
             base.OnConfiguring(dbContextOptionsBuilder);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Book>().HasOne(b => b.User)
+                .WithMany(u => u.Books)
+                .HasForeignKey(b => b.UserId)
+                .HasPrincipalKey(u => u.Id);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public DbSet<Book> Books { get; set; }
     }
 }

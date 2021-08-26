@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookApp.Foundation.Entities
@@ -10,6 +11,8 @@ namespace BookApp.Foundation.Entities
 
         [MaxLength(150)]
         public string FullName { get; set; }
+
+        public IList<Book> Books { get; set; }
 
         public ApplicationUser()
                     : base()

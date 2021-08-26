@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookApp.Foundation.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookApp.API.Controllers
 {
@@ -6,5 +8,11 @@ namespace BookApp.API.Controllers
     [ApiController]
     public class BaseController : ControllerBase
     {
+        protected readonly UserManager<ApplicationUser> _userManager;
+
+        public BaseController(UserManager<ApplicationUser> userManager)
+        {
+            _userManager = userManager;
+        }
     }
 }

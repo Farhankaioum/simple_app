@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using BookApp.Foundation.Contexts;
+using BookApp.Foundation.Services;
 
 namespace BookApp.Foundation
 {
@@ -25,6 +26,9 @@ namespace BookApp.Foundation
               .WithParameter("connectionString", _connectionString)
               .WithParameter("migrationAssemblyName", _migrationAssemblyName)
               .InstancePerLifetimeScope();
+
+            builder.RegisterType<UserService>().As<IUserService>()
+               .InstancePerLifetimeScope();
 
             base.Load(builder);
         }
