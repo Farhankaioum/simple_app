@@ -1,4 +1,5 @@
 using Autofac.Extensions.DependencyInjection;
+using BookApp.Foundation.Contexts;
 using BookApp.Foundation.Data;
 using BookApp.Foundation.Entities;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +44,10 @@ namespace BookApp.API
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     await ApplicationDbContextSeed.SeedEssentialsAsync(userManager, roleManager);
+
+                    //Seed action permission
+                    var bookDbContext = services.GetRequiredService<BookDbContext>();
+                    await BookDbContextSeed.SeedEssentialsAsync(bookDbContext);
                 }
                 catch (Exception ex)
                 {

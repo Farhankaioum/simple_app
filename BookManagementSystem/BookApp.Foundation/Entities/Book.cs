@@ -17,7 +17,7 @@ namespace BookApp.Foundation.Entities
         public string Description { get; set; }
 
         public string ShortDescription { get; set; }
-        public bool IsArchived { get; set; }
+        public bool IsArchived { get; set; } = false;
 
         public ApplicationUser User { get; set; }
         public string UserId { get; set; }

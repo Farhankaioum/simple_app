@@ -1,5 +1,6 @@
 ﻿using BookApp.Foundation.DTOs;
 using BookApp.Foundation.Entities;
+using BookApp.Foundation.Exceptions;
 using BookApp.Foundation.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -112,6 +113,63 @@ namespace BookApp.Foundation.Services
                 signingCredentials: signingCredentials);
 
             return jwtSecurityToken;
+        }
+
+        public async Task<bool> UpdateUser(UserDto model, string userId) 
+        {
+            var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
+            if (userWithSameEmail == null)
+            {
+
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                    throw new NotFoundException("User not found!");
+
+                if (!string.IsNullOrWhiteSpace(model.Email)) 
+                {
+                    user.Email = model.Email;
+                    user.NormalizedEmail = model.Email.ToUpper();
+                    user.UserName = model.Email;
+                    user.NormalizedUserName = model.Email.ToUpper();
+                }
+
+                if(!string.IsNullOrWhiteSpace(model.FirstName))
+                {
+                    user.FullName = $"{model.FirstName} {model.LastName}";
+                }
+
+                if (!string.IsNullOrWhiteSpace(model.Password)) 
+                {
+                    user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
+                }
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return true;
+                }
+
+                return false;
+
+            }
+            else
+            {
+                return false; ;
+            }
+        }
+
+        public async Task<bool> DeleteUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                throw new NotFoundException("User not found!");
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+                return true;
+
+            return false;
         }
     }
 }

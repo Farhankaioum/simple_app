@@ -37,5 +37,6 @@ namespace BookApp.Foundation.Contexts
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
     }
 }

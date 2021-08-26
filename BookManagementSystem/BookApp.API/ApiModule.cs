@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using BookApp.API.Helpers;
 
 namespace BookApp.API
 {
@@ -11,6 +12,8 @@ namespace BookApp.API
 
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<PermissionHelper>().AsSelf()
+               .InstancePerLifetimeScope();
 
             base.Load(builder);
         }

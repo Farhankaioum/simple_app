@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using BookApp.Foundation.Contexts;
+using BookApp.Foundation.Repositories;
 using BookApp.Foundation.Services;
+using BookApp.Foundation.UnitOfWorks;
 
 namespace BookApp.Foundation
 {
@@ -27,7 +29,22 @@ namespace BookApp.Foundation
               .WithParameter("migrationAssemblyName", _migrationAssemblyName)
               .InstancePerLifetimeScope();
 
+            builder.RegisterType<BookUnitOfWork>().As<IBookUnitOfWork>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<BookRepository>().As<IBookRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<PermissionRepository>().As<IPermissionRepository>()
+               .InstancePerLifetimeScope();
+
             builder.RegisterType<UserService>().As<IUserService>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<PermissionService>().As<IPermissionService>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<BookService>().As<IBookService>()
                .InstancePerLifetimeScope();
 
             base.Load(builder);
