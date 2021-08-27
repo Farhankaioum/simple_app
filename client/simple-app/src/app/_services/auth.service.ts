@@ -25,6 +25,7 @@ export class AuthService {
         const user = response;
         if (user){
           localStorage.setItem('auth-token', user.token);
+          localStorage.setItem('user', user.user);
           this.currentUser = user.user;
           this.decodeToken = this.jwtHelper.decodeToken(user.token);
         }

@@ -26,7 +26,7 @@ namespace BookApp.API.Controllers
             _permissionHelper = permissionHelper;
         }
 
-       [HttpGet]
+       [HttpGet()]
        public ActionResult Get(string userId)
         {
             if (!_permissionHelper.IsGetPermission())

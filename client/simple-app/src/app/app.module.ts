@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { RegisterComponent } from './register/register.component';
 import {AuthService} from './_services/auth.service';
 import {UserService} from './_services/user.service';
+import {BookService} from './_services/book.service';
 import {AlertifyService} from './_services/alertify.service';
 
 export function tokenGetter(){
@@ -43,7 +44,8 @@ export function tokenGetter(){
   providers: [
     AuthService,
     UserService,
-    AlertifyService
+    AlertifyService,
+    BookService
   ],
   bootstrap: [AppComponent]
 })
