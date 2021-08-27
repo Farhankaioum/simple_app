@@ -66,9 +66,9 @@ namespace BookApp.API.Controllers
         }
 
         [HttpPut("UpdateUser")]
-        public async Task<ActionResult> UpdateUser(UserDto userModel, string userId)
+        public async Task<ActionResult> UpdateUser(UserDto userModel, string id)
         {
-            var result = await _userService.UpdateUser(userModel, userId);
+            var result = await _userService.UpdateUser(userModel, id);
             if (!result)
                 return Ok("Error occured!");
 

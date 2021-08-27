@@ -27,12 +27,8 @@ namespace BookApp.API.Controllers
         public async Task<ActionResult> RegisterAsync(RegisterModel model)
         {
             var result = await _userService.RegisterAsync(model);
-            if (result)
-                return Ok("Error Occured!");
-
-            var loginResult = await _userService.GetTokenAsync(new LoginModel { Email = model.Email, Password = model.Password});
-            if (!loginResult.IsAuthenticated)
-                return BadRequest();
+            if (!result)
+                return BadRequest("Error Occured!");
 
             return Ok(result);
         }

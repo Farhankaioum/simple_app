@@ -1,0 +1,63 @@
+<div class="row justify-content-center">
+  <div class="col-4 justify-content-center" style="margin-top: 10vh;">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <h2 class="text-center text-primary">Sign Up </h2>
+      <hr>
+    
+      <div class="form-group">
+        <input type="text" class="form-control"
+          [ngClass]="{'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched}"
+          formControlName="email" placeholder="Email">
+          <div class="invalid-feedback"
+            *ngIf="registerForm.get('email').hasError('required') && registerForm.get('email').touched">
+              Email is required!
+          </div>
+      </div>
+    
+      <div class="form-group">
+        <input type="password" class="form-control"
+          [ngClass]="{'is-invalid': registerForm.get('password').errors && registerForm.get('password').touched}"
+          formControlName="password" placeholder="Password">
+          <div class="invalid-feedback"
+            *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">
+            Password is required!
+          </div>
+          <div class="invalid-feedback"
+            *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">
+            Password must be atleast 6 characters!
+          </div>
+          <div class="invalid-feedback"
+            *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">
+            Password cannot excedd 15 characters!
+          </div>
+      </div>
+    
+      <div class="form-group">
+        <input type="password" class="form-control"
+          [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors &&
+           registerForm.get('confirmPassword').touched 
+          || registerForm.get('confirmPassword').touched 
+          && registerForm.hasError('mismatch')}"
+          formControlName="confirmPassword" placeholder="Confirm Password">
+          <div class="invalid-feedback"
+            *ngIf="registerForm.get('confirmPassword').hasError('required') && 
+            registerForm.get('confirmPassword').touched">
+            Confirm Password is required!
+          </div>
+          <div class="invalid-feedback"
+            *ngIf="registerForm.hasError('mismatch') && 
+            registerForm.get('confirmPassword').touched">
+            Confirm Password must match!
+          </div>
+      </div>
+    
+      <div class="form-group text-center">
+        <button class="btn btn-success" [disabled]="!registerForm.valid" type="submit">Register</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+  
+  
+  

@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="['/home']">Book App</a>
+  
+    <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/books']">Books</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/lists']">Manage Users</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/messages']">Settings</a>
+      </li>
+    </ul>
+  
+    <div *ngIf="loggedIn()">
+      <a class="text-white" href="#" (click)="logOut()"><i class="fa fa-sign-out"></i> Log-out</a>
+    </div>
+  
+    <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+      <input class="form-control mr-sm-2" type="text" name="email"
+       placeholder="Email" required [(ngModel)]= "model.email" >
+      <input class="form-control mr-sm-2" type="password" name="password"
+       placeholder="Password" required [(ngModel)]= "model.password" >
+      <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+    </form>
+    </div>
+  
+  </nav>

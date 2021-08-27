@@ -47,7 +47,6 @@ namespace BookApp.Foundation.Services
                 }
 
                 return false;
-                
             }
             else
             {
@@ -72,6 +71,7 @@ namespace BookApp.Foundation.Services
                 authenticationModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 authenticationModel.Email = user.Email;
                 authenticationModel.UserName = user.UserName;
+                authenticationModel.User = new UserDto { Email = user.Email, Id = user.Id};
                 var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
                 authenticationModel.Roles = rolesList.ToList();
                 return authenticationModel;
