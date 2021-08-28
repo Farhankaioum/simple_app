@@ -25,7 +25,7 @@ namespace BookApp.Foundation.Services
 
         public IList<Book> GetAll()
         {
-            return _bookUnitOfWork.BookRepository.GetAll();
+            return _bookUnitOfWork.BookRepository.Get(b => b.IsArchived == false);
         }
 
         public IList<Book> GetAll(string userId)

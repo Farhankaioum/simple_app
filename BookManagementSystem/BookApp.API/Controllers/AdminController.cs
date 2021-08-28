@@ -1,4 +1,6 @@
-﻿using BookApp.Foundation.DTOs;
+﻿using BookApp.API.Dtos;
+using BookApp.API.Params;
+using BookApp.Foundation.DTOs;
 using BookApp.Foundation.Entities;
 using BookApp.Foundation.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -118,12 +120,12 @@ namespace BookApp.API.Controllers
         }
 
         [HttpPut("UpdatePermission")]
-        public async Task<ActionResult> UpdatePermission(int id, bool value)
+        public async Task<ActionResult> UpdatePermission(PermissionParams param)
         {
             try
             {
-                _permissionService.UpdatePermission(id, value);
-                return Ok("Permission updated");
+                _permissionService.UpdatePermission(param.Id, param.Value);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -177,16 +179,16 @@ namespace BookApp.API.Controllers
         }
 
         [HttpPost("archive")]
-        public ActionResult Archive(Guid bookId)
+        public ActionResult Archive(BookParam param)
         {
-            _bookService.Archive(bookId);
+            _bookService.Archive(param.BookId);
             return Ok();
         }
 
         [HttpPost("restore")]
-        public ActionResult Restore(Guid bookId)
+        public ActionResult Restore(BookParam param)
         {
-            _bookService.RestoreById(bookId);
+            _bookService.RestoreById(param.BookId);
             return Ok();
         }
 

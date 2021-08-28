@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Book } from 'src/app/_models/book';
-import { AlertifyService } from 'src/app/_services/alertify.service';
-import { BookService } from 'src/app/_services/book.service';
-import { AuthService } from 'src/app/_services/auth.service';
+import { Book } from '../_models/book';
+import { AlertifyService } from '../_services/alertify.service';
+import { BookService } from '../_services/book.service';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
-  selector: 'app-book-list',
-  templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.css']
+  selector: 'app-user-book-list',
+  templateUrl: './user-book-list.component.html',
+  styleUrls: ['./user-book-list.component.css']
 })
-export class BookListComponent implements OnInit {
+export class UserBookListComponent implements OnInit {
   books: Book[];
 
   constructor(private alertify: AlertifyService,
@@ -19,9 +19,8 @@ export class BookListComponent implements OnInit {
               private bookService: BookService,
               private authService: AuthService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadData();
-    console.log('isAdmin', this.authService.isAdmin());
   }
 
   loadData() {
@@ -36,12 +35,12 @@ export class BookListComponent implements OnInit {
   deleteBook(id) 
   {
     if(confirm("Are you sure to delete")) {
-      this.bookService.deleteBook(id).subscribe(data => {
+      this.bookService.deleteUserBook(id).subscribe(data => {
         this.alertify.success('delete book successful!');
       }, error => {
         this.alertify.error('delete book unsuccessful!');
       },() => {
-        this.bookService.getBooks()
+        this.bookService.getUserBookList()
           .subscribe((data) => {
             this.books = data;
           }, error => {
@@ -54,12 +53,12 @@ export class BookListComponent implements OnInit {
   archiveBook(id) 
   {
     if(confirm("Are you sure to archive")) {
-      this.bookService.archiveBook(id).subscribe(data => {
+      this.bookService.archiveUserBook(id).subscribe(data => {
         this.alertify.success('archive book successful!');
       }, error => {
         this.alertify.error('archive book unsuccessful!');
       },() => {
-        this.bookService.getBooks()
+        this.bookService.getUserBookList()
           .subscribe((data) => {
             this.books = data;
           }, error => {

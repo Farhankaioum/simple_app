@@ -1,0 +1,17 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div *ngIf="permissions">
+            <div *ngFor="let permission of permissions" class="custom-control custom-switch mb-2">
+                <div class="row">
+                    <div class="col-6">
+                        {{permission.name | uppercase}} permission
+                    </div>
+                    <div class="col-6">
+                        <ui-switch [(ngModel)]="permission.isPermitted"
+                     (change)="updatePermission($event, permission.id)"></ui-switch>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

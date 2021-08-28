@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="mt-5 mb-5 float-right">
+        <a class="btn btn-warning mr-2" routerLink="/user-archive-books">Archive Books</a>
+        <a class="btn btn-success" routerLink="/add-user-book">Create New</a>
+    </div>
+    <div *ngIf="books && books.length > 0">
+        <table class="table">
+            <tr>
+                <td>Title</td>
+                <td>Price</td>
+                <td>Description</td>
+                <td>Actions</td>
+            </tr>
+            <tr *ngFor="let book of books">
+                <td>{{book.title}}</td>
+                <td>{{book.price}}</td>
+                <td>{{book.description}}</td>
+                <td>
+                    <a class="btn btn-info mr-2" [routerLink]="['/edit-user-book/', book.id]">Edit</a>
+                    <button class="btn btn-warning mr-2" (click)="archiveBook(book.id)">Archive</button>
+                    <button class="btn btn-danger" (click)="deleteBook(book.id)">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

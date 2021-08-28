@@ -1,0 +1,23 @@
+<div class="container">
+    <div *ngIf="books && books.length > 0">
+        <div class="mt-5 mb-5 float-right">
+            <button class="btn btn-success" (click)="restoreAllBook()">Restore All</button>
+        </div>
+        <table class="table">
+            <tr>
+                <td>Title</td>
+                <td>Price</td>
+                <td>Description</td>
+                <td>Actions</td>
+            </tr>
+            <tr *ngFor="let book of books">
+                <td>{{book.title}}</td>
+                <td>{{book.price}}</td>
+                <td>{{book.description}}</td>
+                <td>
+                    <button class="btn btn-info" (click)="restoreBook(book.id)">Restore</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
