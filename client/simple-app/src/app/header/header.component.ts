@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
     }, error => {
       this.alertify.error(error);
     }, () => {
-      this.router.navigate(['/members']);
+      this.router.navigate(['/']);
     });
   }
 
@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
     this.authService.decodeToken = null;
     this.authService.currentUser = null;
     this.alertify.message('logged out');
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
 
 }

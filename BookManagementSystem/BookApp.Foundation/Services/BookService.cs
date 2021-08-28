@@ -30,7 +30,7 @@ namespace BookApp.Foundation.Services
 
         public IList<Book> GetAll(string userId)
         {
-            return _bookUnitOfWork.BookRepository.Get(x => x.UserId == userId);
+            return _bookUnitOfWork.BookRepository.Get(x => x.UserId == userId && x.IsArchived == false);
         }
 
         public Book GetById(Guid id, string userId)

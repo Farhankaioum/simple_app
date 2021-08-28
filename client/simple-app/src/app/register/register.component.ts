@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { User } from '../_models/user';
 import { AlertifyService } from '../_services/alertify.service';
 import { AuthService } from '../_services/auth.service';
@@ -47,7 +46,7 @@ export class RegisterComponent implements OnInit {
         }, () => {
           this.authService.login(this.user)
             .subscribe(() => {
-              this.router.navigate(['/members']);
+              this.router.navigate(['/']);
             }, error => {
               this.alertify.error(error + ' for login');
             });

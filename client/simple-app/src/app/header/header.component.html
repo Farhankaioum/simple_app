@@ -1,10 +1,13 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/home']">Book App</a>
+      <a class="navbar-brand" [routerLink]="['/']">Book App</a>
   
     <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/books']">Books</a>
+        <a class="nav-link" [routerLink]="['/book-list']">Books</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/archive-book-list']">Archive Books</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/lists']">Manage Users</a>

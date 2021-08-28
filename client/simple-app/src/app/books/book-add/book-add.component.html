@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-4 justify-content-center" style="margin-top: 10vh;">
+      <form [formGroup]="bookForm" (ngSubmit)="addBook()">
+        <h2 class="text-center text-primary">Add Your New Book </h2>
+        <hr>
+      
+        <div class="form-group">
+          <input type="text" class="form-control"
+            [ngClass]="{'is-invalid': bookForm.get('title').errors && bookForm.get('title').touched}"
+            formControlName="title" placeholder="Title">
+            <div class="invalid-feedback"
+              *ngIf="bookForm.get('title').hasError('required') && bookForm.get('title').touched">
+                Title is required!
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <input type="number" class="form-control"
+              [ngClass]="{'is-invalid': bookForm.get('price').errors && bookForm.get('price').touched}"
+              formControlName="price" placeholder="Price">
+              <div class="invalid-feedback"
+                *ngIf="bookForm.get('price').hasError('required') && bookForm.get('price').touched">
+                  Price is required!
+              </div>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': bookForm.get('description').errors && bookForm.get('description').touched}"
+              formControlName="description" placeholder="Description">
+              <div class="invalid-feedback"
+                *ngIf="bookForm.get('description').hasError('required') && bookForm.get('description').touched">
+                  Description is required!
+              </div>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-success" [disabled]="!bookForm.valid" type="submit">Save</button>
+          </div>
+
+      </form>
+    </div>
+  </div>
+    
+    
+    
+  

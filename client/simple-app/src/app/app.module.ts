@@ -14,6 +14,14 @@ import {AuthService} from './_services/auth.service';
 import {UserService} from './_services/user.service';
 import {BookService} from './_services/book.service';
 import {AlertifyService} from './_services/alertify.service';
+import { BookListComponent } from './books/book-list/book-list.component';
+import { BookAddComponent } from './books/book-add/book-add.component';
+import { BookEditComponent } from './books/book-edit/book-edit.component';
+import { AuthGuard } from './_guards/auth.guard';
+import { BookListResolver } from './_resolver/book-list.resolver';
+import { ArchiveBookListResolver } from './_resolver/archive-boo-list.resolver';
+import { BookEditResolver } from './_resolver/book-edit.resolver';
+import { ArchiveBookListComponent } from './archive-book-list/archive-book-list.component';
 
 export function tokenGetter(){
   return localStorage.getItem('auth-token');
@@ -23,7 +31,11 @@ export function tokenGetter(){
   declarations: [
     AppComponent,
     HeaderComponent,
-    RegisterComponent
+    RegisterComponent,
+    BookListComponent,
+    BookAddComponent,
+    BookEditComponent,
+    ArchiveBookListComponent
   ],
   imports: [
     HttpClientModule,
@@ -45,7 +57,11 @@ export function tokenGetter(){
     AuthService,
     UserService,
     AlertifyService,
-    BookService
+    BookService,
+    AuthGuard,
+    BookListResolver,
+    BookEditResolver,
+    ArchiveBookListResolver
   ],
   bootstrap: [AppComponent]
 })

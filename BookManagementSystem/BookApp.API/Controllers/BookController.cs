@@ -1,4 +1,5 @@
-﻿using BookApp.API.Helpers;
+﻿using BookApp.API.Dtos;
+using BookApp.API.Helpers;
 using BookApp.Foundation.Entities;
 using BookApp.Foundation.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -87,32 +88,32 @@ namespace BookApp.API.Controllers
         }
 
         [HttpPost("archive")]
-        public ActionResult Archive(Guid bookId, string userId)
+        public ActionResult Archive(BookParam param)
         {
             if (!_permissionHelper.IsPostPermission())
                 return BadRequest("Post service not available");
 
-            _bookService.Archive(bookId, userId);
+            _bookService.Archive(param.BookId, param.UserId);
             return Ok();
         }
 
         [HttpPost("restore")]
-        public ActionResult Restore(Guid bookId, string userId)
+        public ActionResult Restore(BookParam param)
         {
             if (!_permissionHelper.IsPostPermission())
                 return BadRequest("Post service not available");
 
-            _bookService.RestoreById(bookId, userId);
+            _bookService.RestoreById(param.BookId, param.UserId);
             return Ok();
         }
 
         [HttpPost("restoreAll")]
-        public ActionResult RestoreAll(string userId)
+        public ActionResult RestoreAll(BookParam param)
         {
             if (!_permissionHelper.IsPostPermission())
                 return BadRequest("Post service not available");
 
-            _bookService.RestoreAll(userId);
+            _bookService.RestoreAll(param.UserId);
             return Ok();
         }
     }
