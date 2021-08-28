@@ -4,6 +4,7 @@ using BookApp.Foundation.Data;
 using BookApp.Foundation.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,6 +41,12 @@ namespace BookApp.API
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
+                    // automatically apply pending migration when project run
+                    var applicationDbContext = services.GetRequiredService<ApplicationDbContext>();
+                    var bookContext = services.GetRequiredService<BookDbContext>();
+                    await applicationDbContext.Database.MigrateAsync();
+                    await bookContext.Database.MigrateAsync();
+
                     //Seed Default Users
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
