@@ -26,11 +26,19 @@ namespace BookApp.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(RegisterModel model)
         {
-            var result = await _userService.RegisterAsync(model);
-            if (!result)
-                return BadRequest("Error Occured!");
+            try
+            {
+                var result = await _userService.RegisterAsync(model);
+                if (!result)
+                    return BadRequest("Error Occured!");
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost("login")]
@@ -47,9 +55,8 @@ namespace BookApp.API.Controllers
             catch (Exception ex) 
             {
                 _logger.LogError(ex.Message, ex);
+                return BadRequest();
             }
-
-            return BadRequest();
         }
     }
 }

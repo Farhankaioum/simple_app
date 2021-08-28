@@ -5,6 +5,7 @@ using BookApp.Foundation.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace BookApp.API.Controllers
@@ -15,16 +16,19 @@ namespace BookApp.API.Controllers
         private readonly IBookService _bookService;
         private readonly IPermissionService _permissionService;
         private readonly PermissionHelper _permissionHelper;
+        private readonly ILogger<BookController> _logger;
 
         public BookController(UserManager<ApplicationUser> userManager,
                               IBookService bookService,
                               IPermissionService permissionService,
-                              PermissionHelper permissionHelper) 
+                              PermissionHelper permissionHelper,
+                              ILogger<BookController> logger) 
             : base(userManager)
         {
             _bookService = bookService;
             _permissionService = permissionService;
             _permissionHelper = permissionHelper;
+            _logger = logger;
         }
 
        [HttpGet()]
@@ -33,8 +37,16 @@ namespace BookApp.API.Controllers
             if (!_permissionHelper.IsGetPermission())
                 return BadRequest("Get service not available");
 
-            var books = _bookService.GetAll(userId);
-            return Ok(books);
+            try
+            {
+                var books = _bookService.GetAll(userId);
+                return Ok(books);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetById")]
@@ -43,8 +55,16 @@ namespace BookApp.API.Controllers
             if (!_permissionHelper.IsGetPermission())
                 return BadRequest("Get service not available");
 
-            var book = _bookService.GetById(bookId, userId);
-            return Ok(book);
+            try
+            {
+                var book = _bookService.GetById(bookId, userId);
+                return Ok(book);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -53,8 +73,16 @@ namespace BookApp.API.Controllers
             if (!_permissionHelper.IsPostPermission())
                 return BadRequest("Post service not available");
 
-            _bookService.Add(book, userId);
-            return Ok();
+            try
+            {
+                _bookService.Add(book, userId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPut]
@@ -63,8 +91,16 @@ namespace BookApp.API.Controllers
             if (!_permissionHelper.IsEditPermission())
                 return BadRequest("Edit service not available");
 
-            _bookService.Update(book, userId);
-            return Ok();
+            try
+            {
+                _bookService.Update(book, userId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpDelete]
@@ -73,8 +109,16 @@ namespace BookApp.API.Controllers
             if (!_permissionHelper.IsGetPermission())
                 return BadRequest("Delete service not available");
 
-            _bookService.Delete(bookId, userId);
-            return Ok();
+            try
+            {
+                _bookService.Delete(bookId, userId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetAllArchive")]
@@ -83,8 +127,16 @@ namespace BookApp.API.Controllers
             if (!_permissionHelper.IsGetPermission())
                 return BadRequest("Get service not available");
 
-            var books = _bookService.GetAllArchiveBook(userId);
-            return Ok(books);
+            try
+            {
+                var books = _bookService.GetAllArchiveBook(userId);
+                return Ok(books);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost("archive")]
@@ -93,8 +145,16 @@ namespace BookApp.API.Controllers
             if (!_permissionHelper.IsPostPermission())
                 return BadRequest("Post service not available");
 
-            _bookService.Archive(param.BookId, param.UserId);
-            return Ok();
+            try
+            {
+                _bookService.Archive(param.BookId, param.UserId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost("restore")]
@@ -103,8 +163,16 @@ namespace BookApp.API.Controllers
             if (!_permissionHelper.IsPostPermission())
                 return BadRequest("Post service not available");
 
-            _bookService.RestoreById(param.BookId, param.UserId);
-            return Ok();
+            try
+            {
+                _bookService.RestoreById(param.BookId, param.UserId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost("restoreAll")]
@@ -113,8 +181,16 @@ namespace BookApp.API.Controllers
             if (!_permissionHelper.IsPostPermission())
                 return BadRequest("Post service not available");
 
-            _bookService.RestoreAll(param.UserId);
-            return Ok();
+            try
+            {
+                _bookService.RestoreAll(param.UserId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
     }
 }

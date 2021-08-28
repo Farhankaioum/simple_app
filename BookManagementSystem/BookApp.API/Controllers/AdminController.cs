@@ -42,49 +42,90 @@ namespace BookApp.API.Controllers
             if (!User.Identity.IsAuthenticated)
                 throw new AuthenticationException();
 
-            string userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var users = _userManager.Users.Where(u => u.Email != userEmail);
-            return Ok(users);
+            try
+            {
+                string userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+                var users = _userManager.Users.Where(u => u.Email != userEmail);
+                return Ok(users);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogInformation(ex.Message, ex);
+                return BadRequest();
+            }
+            
         }
 
         [HttpGet("GetUserByUserId")]
         public async Task<ActionResult> GetUserById(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-                return NotFound("User not found");
+            try
+            {
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null)
+                    return NotFound("User not found");
 
-            return Ok(user);
+                return Ok(user);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost("CreateUser")]
         public async Task<ActionResult> CreateUser(RegisterModel registerModel)
         {
-            var result = await _userService.RegisterAsync(registerModel);
-            if (!result)
-                return Ok("Error occured!");
+            try
+            {
+                var result = await _userService.RegisterAsync(registerModel);
+                if (!result)
+                    return Ok("Error occured!");
 
-            return Ok("New User created!");
+                return Ok("New User created!");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPut("UpdateUser")]
         public async Task<ActionResult> UpdateUser(UserDto userModel, string id)
         {
-            var result = await _userService.UpdateUser(userModel, id);
-            if (!result)
-                return BadRequest("Error occured!");
+            try
+            {
+                var result = await _userService.UpdateUser(userModel, id);
+                if (!result)
+                    return BadRequest("Error occured!");
 
-            return Ok();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpDelete("DeleteUser")]
         public async Task<ActionResult> DeleteUser(string userId)
         {
-            var result = await _userService.DeleteUser(userId);
-            if (!result)
-                return Ok("Error occured!");
+            try
+            {
+                var result = await _userService.DeleteUser(userId);
+                if (!result)
+                    return Ok("Error occured!");
 
-            return Ok();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpGet("AllActionPermission")]
@@ -98,9 +139,8 @@ namespace BookApp.API.Controllers
             catch(Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
+                return BadRequest();
             }
-
-            return BadRequest();
         }
 
         [HttpGet("GetPermissionById")]
@@ -114,9 +154,8 @@ namespace BookApp.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
+                return BadRequest();
             }
-
-            return BadRequest();
         }
 
         [HttpPut("UpdatePermission")]
@@ -130,73 +169,145 @@ namespace BookApp.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
+                return BadRequest();
             }
-
-            return BadRequest();
+            
         }
 
 
         [HttpGet("GetAllBook")]
         public ActionResult GetAllBook()
         {
-            var books = _bookService.GetAll();
-            return Ok(books);
+            try
+            {
+                var books = _bookService.GetAll();
+                return Ok(books);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetBookById")]
         public ActionResult GetBookById(Guid bookId)
         {
-            var book = _bookService.GetById(bookId);
-            return Ok(book);
+            try
+            {
+                var book = _bookService.GetById(bookId);
+                return Ok(book);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost("PostBook")]
         public ActionResult PostBook(Book book, string userId)
         {
-            _bookService.Add(book, userId);
-            return Ok();
+            try
+            {
+                _bookService.Add(book, userId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPut("UpdateBook")]
         public ActionResult UpdateBook(Book book)
         {
-            _bookService.Update(book);
-            return Ok();
+            try
+            {
+                _bookService.Update(book);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpDelete("DeleteBook")]
         public ActionResult DeleteBook(Guid bookId)
         {
-            _bookService.Delete(bookId);
-            return Ok();
+            try
+            {
+                _bookService.Delete(bookId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetAllArchive")]
         public ActionResult GetAllArchive()
         {
-            var books = _bookService.GetAllArchiveBook();
-            return Ok(books);
+            try
+            {
+                var books = _bookService.GetAllArchiveBook();
+                return Ok(books);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost("archive")]
         public ActionResult Archive(BookParam param)
         {
-            _bookService.Archive(param.BookId);
-            return Ok();
+            try
+            {
+                _bookService.Archive(param.BookId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost("restore")]
         public ActionResult Restore(BookParam param)
         {
-            _bookService.RestoreById(param.BookId);
-            return Ok();
+            try
+            {
+                _bookService.RestoreById(param.BookId);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
 
         [HttpPost("restoreAll")]
         public ActionResult RestoreAll()
         {
-            _bookService.RestoreAll();
-            return Ok();
+            try
+            {
+                _bookService.RestoreAll();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest();
+            }
         }
     }
 }
