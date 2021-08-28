@@ -1,21 +1,27 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container">
       <a class="navbar-brand" [routerLink]="['/']">Book App</a>
-  
-    <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/book-list']">Books</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/archive-book-list']">Archive Books</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/lists']">Manage Users</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/messages']">Settings</a>
-      </li>
-    </ul>
+
+      <ul *ngIf="loggedIn() && !isAdmin()" class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/book-list']">Books</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/archive-book-list']">Archive Books</a>
+        </li>
+      </ul>
+
+      <ul *ngIf="loggedIn() && isAdmin()" class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/user-list']">Manage Users</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/user-books']">Manage Books</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/messages']">Settings</a>
+        </li>
+      </ul>
   
     <div *ngIf="loggedIn()">
       <a class="text-white" href="#" (click)="logOut()"><i class="fa fa-sign-out"></i> Log-out</a>

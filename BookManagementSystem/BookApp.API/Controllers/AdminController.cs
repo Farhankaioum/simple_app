@@ -70,9 +70,9 @@ namespace BookApp.API.Controllers
         {
             var result = await _userService.UpdateUser(userModel, id);
             if (!result)
-                return Ok("Error occured!");
+                return BadRequest("Error occured!");
 
-            return Ok("User information updated!");
+            return Ok();
         }
 
         [HttpDelete("DeleteUser")]
@@ -82,7 +82,7 @@ namespace BookApp.API.Controllers
             if (!result)
                 return Ok("Error occured!");
 
-            return Ok("User deleted!");
+            return Ok();
         }
 
         [HttpGet("AllActionPermission")]
@@ -117,7 +117,7 @@ namespace BookApp.API.Controllers
             return BadRequest();
         }
 
-        [HttpGet("UpdatePermission")]
+        [HttpPut("UpdatePermission")]
         public async Task<ActionResult> UpdatePermission(int id, bool value)
         {
             try

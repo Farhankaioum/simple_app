@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Book } from 'src/app/_models/book';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { BookService } from 'src/app/_services/book.service';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-book-list',
@@ -15,10 +16,12 @@ export class BookListComponent implements OnInit {
 
   constructor(private alertify: AlertifyService,
               private route: ActivatedRoute,
-              private bookService: BookService) { }
+              private bookService: BookService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.loadData();
+    console.log('isAdmin', this.authService.isAdmin());
   }
 
   loadData() {

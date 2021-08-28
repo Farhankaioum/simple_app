@@ -33,8 +33,14 @@ export class HeaderComponent implements OnInit {
     return this.authService.loggedIn();
   }
 
+  isAdmin(){
+    return this.authService.isAdmin();
+  }
+
   logOut(){
     localStorage.removeItem('auth-token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('user-role');
     this.authService.decodeToken = null;
     this.authService.currentUser = null;
     this.alertify.message('logged out');

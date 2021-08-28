@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="mt-5 mb-5 float-right">
+        <a class="btn btn-success" routerLink="/add-user">Add New User</a>
+    </div>
+    <div *ngIf="users && users.length > 0">
+        <table class="table">
+            <tr>
+                <td>Email</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Actions</td>
+            </tr>
+            <tr *ngFor="let user of users">
+                <td>{{user.email}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>
+                    <a class="btn btn-info mr-2" [routerLink]="['/edit-user/', user.id]">Edit</a>
+                    <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

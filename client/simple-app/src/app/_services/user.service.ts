@@ -18,10 +18,20 @@ export class UserService {
   }
 
   getUser(id): Observable<User>{
-    return this.http.get<User>(this.baseUrl + 'admin/GetUserByUserId/' + id);
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.get<User>(this.baseUrl + 'admin/GetUserByUserId', {params});
   }
 
   updateUser(id: number, user: User){
-    return this.http.put(this.baseUrl + 'admin/UpdateUser/' + id, user);
+    let params = new HttpParams();
+    params = params.append('id', id.toString());
+    return this.http.put(this.baseUrl + 'admin/UpdateUser/', user, {params});
+  }
+
+  deleteUser(id) {
+    let params = new HttpParams();
+    params = params.append('userId', id);
+    return this.http.delete(this.baseUrl + 'admin/DeleteUser/', {params});
   }
 }

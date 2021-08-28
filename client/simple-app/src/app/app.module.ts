@@ -18,10 +18,17 @@ import { BookListComponent } from './books/book-list/book-list.component';
 import { BookAddComponent } from './books/book-add/book-add.component';
 import { BookEditComponent } from './books/book-edit/book-edit.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { AdminGuard } from './_guards/admin.guard';
 import { BookListResolver } from './_resolver/book-list.resolver';
-import { ArchiveBookListResolver } from './_resolver/archive-boo-list.resolver';
+import { ArchiveBookListResolver } from './_resolver/archive-book-list.resolver';
 import { BookEditResolver } from './_resolver/book-edit.resolver';
+import { UserListResolver } from './_resolver/user-list.resolver';
+import { UserEditResolver } from './_resolver/user-edit.resolver';
 import { ArchiveBookListComponent } from './archive-book-list/archive-book-list.component';
+import { HomeComponent } from './home/home.component';
+import { UserListComponent } from './users/user-list/user-list.component';
+import { UserAddComponent } from './users/user-add/user-add.component';
+import { UserEditComponent } from './users/user-edit/user-edit.component';
 
 export function tokenGetter(){
   return localStorage.getItem('auth-token');
@@ -35,7 +42,11 @@ export function tokenGetter(){
     BookListComponent,
     BookAddComponent,
     BookEditComponent,
-    ArchiveBookListComponent
+    ArchiveBookListComponent,
+    HomeComponent,
+    UserListComponent,
+    UserAddComponent,
+    UserEditComponent
   ],
   imports: [
     HttpClientModule,
@@ -59,8 +70,11 @@ export function tokenGetter(){
     AlertifyService,
     BookService,
     AuthGuard,
+    AdminGuard,
     BookListResolver,
+    UserListResolver,
     BookEditResolver,
+    UserEditResolver,
     ArchiveBookListResolver
   ],
   bootstrap: [AppComponent]

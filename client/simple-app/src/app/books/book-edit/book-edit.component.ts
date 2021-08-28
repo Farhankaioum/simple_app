@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Book } from 'src/app/_models/book';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { BookService } from 'src/app/_services/book.service';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 })
 export class BookEditComponent implements OnInit {
   bookForm: FormGroup;
-  @ViewChild('editForm', {static: true}) editForm: NgForm;
   book: Book;
 
   constructor(private bookService: BookService,

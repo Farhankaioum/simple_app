@@ -74,6 +74,12 @@ namespace BookApp.Foundation.Services
                 authenticationModel.User = new UserDto { Email = user.Email, Id = user.Id};
                 var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
                 authenticationModel.Roles = rolesList.ToList();
+                var count = rolesList.Count(r => r == "Administrator");
+                if (count > 0)
+                    authenticationModel.IsAdmin = true;
+                else
+                    authenticationModel.IsAdmin = false;
+
                 return authenticationModel;
             }
             authenticationModel.IsAuthenticated = false;
@@ -117,10 +123,6 @@ namespace BookApp.Foundation.Services
 
         public async Task<bool> UpdateUser(UserDto model, string userId) 
         {
-            var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
-            if (userWithSameEmail == null)
-            {
-
                 var user = await _userManager.FindByIdAsync(userId);
                 if (user == null)
                     throw new NotFoundException("User not found!");
@@ -135,8 +137,14 @@ namespace BookApp.Foundation.Services
 
                 if(!string.IsNullOrWhiteSpace(model.FirstName))
                 {
-                    user.FullName = $"{model.FirstName} {model.LastName}";
+                    user.FullName = $"{model.FirstName}";
                 }
+
+                if (!string.IsNullOrWhiteSpace(model.LastName))
+                {
+                    user.FullName = $"{user.FullName} {model.LastName}";
+                }
+
 
                 if (!string.IsNullOrWhiteSpace(model.Password)) 
                 {
@@ -151,12 +159,6 @@ namespace BookApp.Foundation.Services
                 }
 
                 return false;
-
-            }
-            else
-            {
-                return false; ;
-            }
         }
 
         public async Task<bool> DeleteUser(string userId)

@@ -3,17 +3,17 @@ import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@a
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Book } from '../_models/book';
-import { BookService } from '../_services/book.service';
+import { User } from '../_models/user';
+import { UserService } from '../_services/user.service';
 import { AlertifyService } from '../_services/alertify.service';
 
 @Injectable()
-export class BookListResolver implements Resolve<Book[]>{
-    constructor(private bookService: BookService, private router: Router,
+export class UserListResolver implements Resolve<User[]>{
+    constructor(private userService: UserService, private router: Router,
         private alertify: AlertifyService){ }
 
-        resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Book[] | Observable<Book[]> | Promise<Book[]> {
-            return this.bookService.getBooks().pipe(
+        resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): User[] | Observable<User[]> | Promise<User[]> {
+            return this.userService.getUsers().pipe(
                 catchError(error => {
                     this.alertify.error('Problem retrieving data');
                     this.router.navigate(['']);
